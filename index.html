@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchulTech | Gerätebetreuung & Support</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        
+        .tutorial-card {
+            perspective: 1000px;
+        }
+        
+        .tutorial-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .tutorial-card:hover .tutorial-card-inner {
+            transform: rotateY(10deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-laptop-code text-3xl"></i>
+                    <h1 class="text-2xl font-bold">SchulTech</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-blue-200 transition">Startseite</a>
+                    <a href="#tutorials" class="hover:text-blue-200 transition">Tutorials</a>
+                    <a href="#tips" class="hover:text-blue-200 transition">Tipps & Tricks</a>
+                    <a href="#support" class="hover:text-blue-200 transition">Support</a>
+                    <div id="user-section" class="hidden">
+                        <a href="/dashboard" class="hover:text-blue-200 transition"><i class="fas fa-user-circle mr-1"></i> Dashboard</a>
+                        <a href="/logout" class="hover:text-blue-200 transition ml-4"><i class="fas fa-sign-out-alt mr-1"></i> Logout</a>
+                    </div>
+                    <div id="guest-section">
+                        <a href="/login" class="hover:text-blue-200 transition"><i class="fas fa-sign-in-alt mr-1"></i> Login</a>
+                        <a href="/register" class="hover:text-blue-200 transition ml-4"><i class="fas fa-user-plus mr-1"></i> Register</a>
+                    </div>
+                </nav>
+                <button class="md:hidden text-2xl" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div class="md:hidden hidden mt-4" id="mobile-menu">
+                <div class="flex flex-col space-y-3">
+                    <a href="#home" class="hover:text-blue-200 transition">Startseite</a>
+                    <a href="#tutorials" class="hover:text-blue-200 transition">Tutorials</a>
+                    <a href="#tips" class="hover:text-blue-200 transition">Tipps & Tricks</a>
+                    <a href="#support" class="hover:text-blue-200 transition">Support</a>
+                    <div id="mobile-user-section" class="hidden pt-4 border-t border-blue-500 mt-2">
+                        <a href="/dashboard" class="hover:text-blue-200 transition"><i class="fas fa-user-circle mr-2"></i> Dashboard</a>
+                        <a href="/logout" class="hover:text-blue-200 transition mt-2 block"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
+                    </div>
+                    <div id="mobile-guest-section" class="pt-4 border-t border-blue-500 mt-2">
+                        <a href="/login" class="hover:text-blue-200 transition"><i class="fas fa-sign-in-alt mr-2"></i> Login</a>
+                        <a href="/register" class="hover:text-blue-200 transition mt-2 block"><i class="fas fa-user-plus mr-2"></i> Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="py-16 bg-gradient-to-b from-blue-50 to-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 animate-fade-in">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Professionelle Betreuung für Ihre Schulgeräte</h1>
+                    <p class="text-lg text-gray-600 mb-8">Entdecken Sie unsere umfassende Sammlung von Tutorials, Tipps und Tricks für die optimale Nutzung und Wartung Ihrer Schulgeräte.</p>
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                        <a href="#tutorials" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition shadow-md hover:shadow-lg text-center">Tutorials entdecken</a>
+                        <a href="#support" class="bg-white hover:bg-gray-100 text-blue-600 px-6 py-3 rounded-lg font-medium transition shadow-md hover:shadow-lg text-center border border-blue-100">Support kontaktieren</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 animate-fade-in delay-1">
+                    <img src="https://images.unsplash.com/photo-1593508512255-86ab42a8e620?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Schulgeräte" class="rounded-xl shadow-2xl w-full max-w-lg mx-auto">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-10 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto animate-fade-in delay-2">
+                <div class="relative">
+                    <input type="text" placeholder="Suchen Sie nach Tutorials, Tipps oder Geräten..." class="w-full px-6 py-4 rounded-full border border-gray-200 focus:border-blue-500 transition search-input shadow-md pl-14">
+                    <i class="fas fa-search absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl"></i>
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition">Suchen</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tutorials Section -->
+    <section id="tutorials" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-fade-in">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Unsere Tutorials</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Schritt-für-Schritt-Anleitungen für die Einrichtung, Wartung und Fehlerbehebung Ihrer Schulgeräte.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Tutorial Card 1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md tutorial-card animate-fade-in delay-1">
+                    <div class="tutorial-card-inner">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1517430816045-df4b7cef802e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Laptop Wartung" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                            <div class="absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">Neu</div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Windows</span>
+                                <span class="ml-2 text-gray-500 text-sm"><i class="far fa-clock mr-1"></i> 15 Min</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Grundlegende Laptop-Wartung</h3>
+                            <p class="text-gray-600 mb-4">Lernen Sie, wie Sie Ihren Schul-Laptop regelmäßig warten, um die Leistung zu optimieren.</p>
+                            <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition flex items-center">
+                                Tutorial ansehen <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tutorial Card 2 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md tutorial-card animate-fade-in delay-2">
+                    <div class="tutorial-card-inner">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Beamer Einrichtung" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Hardware</span>
+                                <span class="ml-2 text-gray-500 text-sm"><i class="far fa-clock mr-1"></i> 10 Min</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Beamer richtig einrichten</h3>
+                            <p class="text-gray-600 mb-4">Komplette Anleitung zur korrekten Einrichtung und Kalibrierung von Schulbeamern.</p>
+                            <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition flex items-center">
+                                Tutorial ansehen <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tutorial Card 3 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md tutorial-card animate-fade-in delay-3">
+                    <div class="tutorial-card-inner">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1555774698-0f77e70cebe9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Tablet Verwaltung" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">iOS</span>
+                                <span class="ml-2 text-gray-500 text-sm"><i class="far fa-clock mr-1"></i> 20 Min</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Schul-Tablets verwalten</h3>
+                            <p class="text-gray-600 mb-4">Effektive Verwaltung von iPad-Klassensätzen mit MDM-Lösungen.</p>
+                            <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition flex items-center">
+                                Tutorial ansehen <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 animate-fade-in">
+                <a href="#" class="inline-block bg-white hover:bg-gray-100 text-blue-600 px-6 py-3 rounded-lg font-medium transition shadow-md hover:shadow-lg border border-gray-200">
+                    Alle Tutorials anzeigen <i class="fas fa-chevron-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section id="tips" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-fade-in">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Tipps & Tricks</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Praktische Ratschläge für den täglichen Umgang mit Schulgeräten.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Tip 1 -->
+                <div class="bg-gray-50 rounded-xl p-8 flex flex-col md:flex-row items-center animate-fade-in delay-1 card-hover">
+                    <div class="md:w-1/3 mb-6 md:mb-0 flex justify-center">
+                        <div class="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-battery-three-quarters text-blue-600 text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3 md:pl-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Akku-Lebensdauer verlängern</h3>
+                        <p class="text-gray-600 mb-4">Lernen Sie, wie Sie die Akkulaufzeit Ihrer Schulgeräte durch einfache Einstellungen und Gewohnheiten deutlich verlängern können.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition">Mehr erfahren</a>
+                    </div>
+                </div>
+                
+                <!-- Tip 2 -->
+                <div class="bg-gray-50 rounded-xl p-8 flex flex-col md:flex-row items-center animate-fade-in delay-2 card-hover">
+                    <div class="md:w-1/3 mb-6 md:mb-0 flex justify-center">
+                        <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-green-600 text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3 md:pl-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Sicherheitseinstellungen</h3>
+                        <p class="text-gray-600 mb-4">Essenzielle Sicherheitseinstellungen für Schulgeräte, die Sie unbedingt aktivieren sollten, um Daten zu schützen.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition">Mehr erfahren</a>
+                    </div>
+                </div>
+                
+                <!-- Tip 3 -->
+                <div class="bg-gray-50 rounded-xl p-8 flex flex-col md:flex-row items-center animate-fade-in delay-1 card-hover">
+                    <div class="md:w-1/3 mb-6 md:mb-0 flex justify-center">
+                        <div class="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-wifi text-purple-600 text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3 md:pl-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Stabile WLAN-Verbindung</h3>
+                        <p class="text-gray-600 mb-4">Tipps zur Verbesserung der WLAN-Stabilität in Klassenzimmern und zur Fehlerbehebung bei Verbindungsproblemen.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition">Mehr erfahren</a>
+                    </div>
+                </div>
+                
+                <!-- Tip 4 -->
+                <div class="bg-gray-50 rounded-xl p-8 flex flex-col md:flex-row items-center animate-fade-in delay-2 card-hover">
+                    <div class="md:w-1/3 mb-6 md:mb-0 flex justify-center">
+                        <div class="bg-yellow-100 w-20 h-20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-chalkboard-teacher text-yellow-600 text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3 md:pl-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Digitale Tafeln optimal nutzen</h3>
+                        <p class="text-gray-600 mb-4">Professionelle Tipps zur effektiven Nutzung interaktiver Whiteboards im Unterricht.</p>
+                        <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition">Mehr erfahren</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Device Categories -->
+    <section class="py-16 bg-gradient-to-b from-blue-50 to-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-fade-in">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Gerätekategorien</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Finden Sie Unterstützung für Ihre spezifischen Gerätetypen.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Category 1 -->
+                <div class="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-xl transition animate-fade-in delay-1 card-hover">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-laptop text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Laptops</h3>
+                    <p class="text-gray-600 text-sm">Windows, macOS, Chromebooks</p>
+                </div>
+                
+                <!-- Category 2 -->
+                <div class="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-xl transition animate-fade-in delay-2 card-hover">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-tablet-alt text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Tablets</h3>
+                    <p class="text-gray-600 text-sm">iPad, Android, Windows</p>
+                </div>
+                
+                <!-- Category 3 -->
+                <div class="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-xl transition animate-fade-in delay-3 card-hover">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-projector text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Beamer</h3>
+                    <p class="text-gray-600 text-sm">Alle gängigen Modelle</p>
+                </div>
+                
+                <!-- Category 4 -->
+                <div class="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-xl transition animate-fade-in delay-4 card-hover">
+                    <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-print text-yellow-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Drucker</h3>
+                    <p class="text-gray-600 text-sm">Netzwerkdrucker & mehr</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-fade-in">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Technischer Support</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Wir helfen Ihnen bei allen technischen Problemen mit Ihren Schulgeräten.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Support Option 1 -->
+                <div class="bg-blue-50 rounded-xl p-8 text-center animate-fade-in delay-1 card-hover">
+                    <div class="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-phone-alt text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Telefonischer Support</h3>
+                    <p class="text-gray-600 mb-6">Kontaktieren Sie unsere Experten direkt für schnelle Hilfe bei dringenden Problemen.</p>
+                    <a href="tel:+49123456789" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition">+49 123 456 789</a>
+                </div>
+                
+                <!-- Support Option 2 -->
+                <div class="bg-green-50 rounded-xl p-8 text-center animate-fade-in delay-2 card-hover">
+                    <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-envelope text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">E-Mail Support</h3>
+                    <p class="text-gray-600 mb-6">Senden Sie uns eine detaillierte Beschreibung Ihres Problems für eine gründliche Analyse.</p>
+                    <a href="mailto:support@schultech.de" class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition">support@schultech.de</a>
+                </div>
+                
+                <!-- Support Option 3 -->
+                <div class="bg-purple-50 rounded-xl p-8 text-center animate-fade-in delay-3 card-hover">
+                    <div class="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-calendar-alt text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Vor-Ort-Termin</h3>
+                    <p class="text-gray-600 mb-6">Vereinbaren Sie einen Termin mit unseren Technikern für komplexe Probleme vor Ort.</p>
+                    <a href="#" class="inline-block bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition">Termin buchen</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-fade-in">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Häufige Fragen</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Antworten auf die am häufigsten gestellten Fragen.</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <!-- FAQ Item 1 -->
+                <div class="bg-white rounded-lg shadow-md mb-4 overflow-hidden animate-fade-in delay-1">
+                    <button class="faq-question w-full px-6 py-4 text-left font-medium text-gray-800 hover:bg-gray-50 transition flex justify-between items-center">
+                        <span>Wie kann ich ein vergessenes Passwort zurücksetzen?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-4 text-gray-600 hidden">
+                        <p>Für die meisten Schulgeräte gibt es einen Administrator, der Passwörter zurücksetzen kann. Kontaktieren Sie Ihren IT-Administrator oder unseren Support, wenn Sie ein lokales Konto haben. Für Netzwerk-Konten wenden Sie sich bitte an die Schulverwaltung.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="bg-white rounded-lg shadow-md mb-4 overflow-hidden animate-fade-in delay-2">
+                    <button class="faq-question w-full px-6 py-4 text-left font-medium text-gray-800 hover:bg-gray-50 transition flex justify-between items-center">
+                        <span>Was tun, wenn ein Gerät nicht mehr startet?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-4 text-gray-600 hidden">
+                        <p>Versuchen Sie zunächst, das Gerät an eine andere Stromquelle anzuschließen. Bei Laptops: Entfernen Sie den Akku (wenn möglich) für 30 Sekunden und setzen Sie ihn wieder ein. Bleibt das Problem bestehen, notieren Sie eventuelle Fehlermeldungen und kontaktieren Sie unseren Support.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="bg-white rounded-lg shadow-md mb-4 overflow-hidden animate-fade-in delay-3">
+                    <button class="faq-question w-full px-6 py-4 text-left font-medium text-gray-800 hover:bg-gray-50 transition flex justify-between items-center">
+                        <span>Wie oft sollten Schulgeräte gewartet werden?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-4 text-gray-600 hidden">
+                        <p>Wir empfehlen eine grundlegende Wartung (Reinigung, Software-Updates, Leistungsprüfung) alle 3 Monate. Hardware-Inspektionen sollten jährlich durchgeführt werden. Bei intensiver Nutzung können kürzere Intervalle sinnvoll sein.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="bg-white rounded-lg shadow-md mb-4 overflow-hidden animate-fade-in delay-4">
+                    <button class="faq-question w-full px-6 py-4 text-left font-medium text-gray-800 hover:bg-gray-50 transition flex justify-between items-center">
+                        <span>Kann ich private Software auf Schulgeräten installieren?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-4 text-gray-600 hidden">
+                        <p>Dies hängt von den Richtlinien Ihrer Schule ab. In den meisten Fällen ist die Installation privater Software nicht erlaubt, um Sicherheit und Stabilität der Geräte zu gewährleisten. Bitte wenden Sie sich an Ihre Schulleitung oder IT-Abteilung für Ausnahmen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-gradient-to-r from-blue-600 to-indigo-800 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center animate-fade-in">
+                <h2 class="text-3xl font-bold mb-6">Bleiben Sie informiert</h2>
+                <p class="text-lg mb-8 max-w-2xl mx-auto">Abonnieren Sie unseren Newsletter für regelmäßige Updates, neue Tutorials und exklusive Tipps zur Gerätebetreuung.</p>
+                
+                <div class="flex flex-col sm:flex-row max-w-md sm:max-w-xl mx-auto">
+                    <input type="email" placeholder="Ihre E-Mail-Adresse" class="flex-grow px-5 py-3 rounded-l-full sm:rounded-r-none rounded-r-full mb-2 sm:mb-0 text-gray-800 focus:outline-none">
+                    <button class="bg-white hover:bg-gray-100 text-blue-600 px-6 py-3 rounded-r-full sm:rounded-l-none rounded-l-full font-medium transition shadow-md hover:shadow-lg whitespace-nowrap">Abonnieren</button>
+                </div>
+                
+                <p class="text-sm mt-4 opacity-80">Wir respektieren Ihre Privatsphäre. Sie können sich jederzeit abmelden.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Column 1 -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-laptop-code text-2xl text-blue-400"></i>
+                        <h3 class="text-xl font-bold text-white">SchulTech</h3>
+                    </div>
+                    <p class="mb-4">Professionelle Betreuung und Support für Schulgeräte aller Art.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Ressourcen</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Tutorials</a></li>
+                        <li><a href="#" class="hover:text-white transition">Handbücher</a></li>
+                        <li><a href="#" class="hover:text-white transition">Software-Downloads</a></li>
+                        <li><a href="#" class="hover:text-white transition">Häufige Fragen</a></li>
+                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Kontakt</a></li>
+                        <li><a href="#" class="hover:text-white transition">Live-Chat</a></li>
+                        <li><a href="#" class="hover:text-white transition">Ticket-System</a></li>
+                        <li><a href="#" class="hover:text-white transition">Service-Status</a></li>
+                        <li><a href="#" class="hover:text-white transition">Feedback</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Rechtliches</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Datenschutz</a></li>
+                        <li><a href="#" class="hover:text-white transition">Nutzungsbedingungen</a></li>
+                        <li><a href="#" class="hover:text-white transition">Impressum</a></li>
+                        <li><a href="#" class="hover:text-white transition">Cookie-Richtlinie</a></li>
+                        <li><a href="#" class="hover:text-white transition">Lizenzinformationen</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
+                <p>&copy; 2023 SchulTech. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Check login status
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (isLoggedIn) {
+                document.getElementById('user-section').classList.remove('hidden');
+                document.getElementById('guest-section').classList.add('hidden');
+                document.getElementById('mobile-user-section').classList.remove('hidden');
+                document.getElementById('mobile-guest-section').classList.add('hidden');
+            } else {
+                document.getElementById('user-section').classList.add('hidden');
+                document.getElementById('guest-section').classList.remove('hidden');
+                document.getElementById('mobile-user-section').classList.add('hidden');
+                document.getElementById('mobile-guest-section').classList.remove('hidden');
+            }
+        }
+
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Check login status on page load
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+
+        // Tutorial rating system
+        document.querySelectorAll('.rate-tutorial').forEach(button => {
+            button.addEventListener('click', function() {
+                const tutorialId = this.dataset.tutorialId;
+                const rating = this.dataset.rating;
+                
+                if (!localStorage.getItem('isLoggedIn')) {
+                    alert('Bitte loggen Sie sich ein, um Tutorials zu bewerten.');
+                    return;
+                }
+                
+                fetch(`/api/tutorials/${tutorialId}/rate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({ rating })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.querySelector(`.tutorial-rating[data-tutorial-id="${tutorialId}"]`).textContent = 
+                            `Bewertung: ${data.newRating.toFixed(1)} (${data.totalRatings} Bewertungen)`;
+                    }
+                });
+            });
+        });
+
+        // Comment submission
+        document.querySelectorAll('.comment-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!localStorage.getItem('isLoggedIn')) {
+                    alert('Bitte loggen Sie sich ein, um Kommentare zu verfassen.');
+                    return;
+                }
+                
+                const tutorialId = this.dataset.tutorialId;
+                const commentText = this.querySelector('textarea').value;
+                
+                fetch(`/api/tutorials/${tutorialId}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({ text: commentText })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const commentsSection = document.querySelector(`.comments-section[data-tutorial-id="${tutorialId}"]`);
+                        const newComment = document.createElement('div');
+                        newComment.className = 'comment bg-gray-50 p-4 rounded-lg mb-4';
+                        newComment.innerHTML = `
+                            <div class="flex items-center mb-2">
+                                <img src="${data.user.avatar}" alt="${data.user.name}" class="w-8 h-8 rounded-full mr-2">
+                                <span class="font-medium">${data.user.name}</span>
+                                <span class="text-gray-500 text-sm ml-2">gerade eben</span>
+                            </div>
+                            <p>${commentText}</p>
+                        `;
+                        commentsSection.prepend(newComment);
+                        this.querySelector('textarea').value = '';
+                    }
+                });
+            });
+        });
+
+        // FAQ accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                // Toggle answer visibility
+                answer.classList.toggle('hidden');
+                
+                // Rotate icon
+                icon.classList.toggle('transform');
+                icon.classList.toggle('rotate-180');
+                
+                // Close other open answers
+                faqQuestions.forEach(q => {
+                    if (q !== question) {
+                        q.nextElementSibling.classList.add('hidden');
+                        q.querySelector('i').classList.remove('transform', 'rotate-180');
+                    }
+                });
+            });
+        });
+
+        // Animate elements when they come into view
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate-fade-in');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Run once on page load
+        window.addEventListener('load', animateOnScroll);
+        
+        // Run on scroll
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
